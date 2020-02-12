@@ -1,5 +1,7 @@
+import { AsyncStorage } from "react-native";
+
 import * as types from "../constants/actionTypes";
-import { API_BASE_URL } from "../constants/general";
+import { API_BASE_URL, ASYNCSTORAGE_KEY_USER } from "../constants/general";
 import CustomError from "../utility/CustomError";
 
 export function loginRequest() {
@@ -19,6 +21,25 @@ export function loginFailure(error) {
   return {
     type: types.LOGIN_FAILURE,
     error
+  };
+}
+
+/**
+ * Authenticate user whether login or not.
+ */
+export function authenticateAction() {
+  return dispatch => {
+    return AsyncStorage.getItem(ASYNCSTORAGE_KEY_USER, (error, user) => {
+      if (error) {
+        console.log("Error retrieving user.", error);
+      }
+    }).then(user => {
+      if (user !== null) {
+        dispatch(loginSuccess(JSON.parse(user)));
+        return true;
+      }
+      return false;
+    });
   };
 }
 
@@ -47,11 +68,13 @@ export function loginAction(staffId, password) {
         if (response.ok) {
           console.log("Response Success");
           return response.json().then(json => {
-            dispatch(loginSuccess(json["user"]));
+            let user = json["user"];
+            saveUser(user);
+            dispatch(loginSuccess(user));
           });
         } else {
           console.log("Response Error");
-          response.json().then(json => {
+          return response.json().then(json => {
             let customError = new CustomError(
               response.status,
               json.errorMessage,
@@ -71,4 +94,23 @@ export function loginAction(staffId, password) {
         dispatch(loginFailure(customError));
       });
   };
+}
+
+/**
+ * User logout.
+ */
+export function logoutAction() {
+  AsyncStorage.removeItem(ASYNCSTORAGE_KEY_USER, error => {
+    if (error) {
+      console.log("Error removing user.", error);
+    }
+  });
+}
+
+function saveUser(user) {
+  AsyncStorage.setItem(ASYNCSTORAGE_KEY_USER, JSON.stringify(user), error => {
+    if (error) {
+      console.log("Error saving user.", error);
+    }
+  });
 }

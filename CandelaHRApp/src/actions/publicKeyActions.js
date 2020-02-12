@@ -42,7 +42,7 @@ export function publicKeyGetAction() {
           });
         } else {
           console.log("Response Error");
-          response.json().then(json => {
+          return response.json().then(json => {
             let customError = new CustomError(
               response.status,
               json.errorMessage,

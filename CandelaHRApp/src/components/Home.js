@@ -3,8 +3,7 @@ import {
   SafeAreaView,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
-  Text
+  InteractionManager
 } from "react-native";
 import { ListItem } from "react-native-elements";
 

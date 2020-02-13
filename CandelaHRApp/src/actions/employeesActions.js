@@ -22,6 +22,26 @@ export function employeesListFailure(error) {
   };
 }
 
+export function employeeAddRequest() {
+  return {
+    type: types.EMPLOYEE_ADD_REQUEST
+  };
+}
+
+export function employeeAddSuccess(employee) {
+  return {
+    type: types.EMPLOYEE_ADD_SUCCESS,
+    employee
+  };
+}
+
+export function employeeAddFailure(error) {
+  return {
+    type: types.EMPLOYEE_ADD_FAILURE,
+    error
+  };
+}
+
 /**
  * List the employees.
  */
@@ -45,7 +65,7 @@ export function employeesListAction() {
           });
         } else {
           console.log("Response Error");
-          response.json().then(json => {
+          return response.json().then(json => {
             let customError = new CustomError(
               json.status_code,
               json.status_message,
@@ -63,6 +83,53 @@ export function employeesListAction() {
           "Retrieve Employees Unsuccessful"
         );
         dispatch(employeesListFailure(customError));
+      });
+  };
+}
+
+/**
+ * Add an employee.
+ */
+export function employeeAddAction(params) {
+  return (dispatch, getState) => {
+    dispatch(employeeAddRequest());
+
+    let urlString = `${API_BASE_URL}/users`;
+
+    return fetch(urlString, {
+      method: "POST",
+      headers: {
+        Accesstoken: getState().user.user.accesstoken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(params)
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log("Response Success");
+          return response.json().then(json => {
+            dispatch(employeeAddSuccess(json["user"]));
+          });
+        } else {
+          console.log("Response Error");
+          return response.json().then(json => {
+            let customError = new CustomError(
+              json.status_code,
+              json.status_message,
+              "Add Employee Unsuccessful"
+            );
+            dispatch(employeeAddFailure(customError));
+          });
+        }
+      })
+      .catch(error => {
+        console.log("Error:", error);
+        let customError = new CustomError(
+          500,
+          "Unable to add employee",
+          "Add Employee Unsuccessful"
+        );
+        dispatch(employeeAddFailure(customError));
       });
   };
 }

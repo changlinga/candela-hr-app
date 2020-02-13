@@ -34,7 +34,7 @@ export default class EmployeeDetails extends Component {
             title="Date of Birth"
             rightTitle={
               employee.birthDate
-                ? moment(employee.birthDate).format("D MMMM YYYY")
+                ? moment(employee.birthDate).format("DD-MMM-YYYY")
                 : ""
             }
             bottomDivider
@@ -60,7 +60,7 @@ export default class EmployeeDetails extends Component {
             title="Join Date"
             rightTitle={
               employee.startDate
-                ? moment(employee.startDate).format("D MMMM YYYY")
+                ? moment(employee.startDate).format("DD-MMM-YYYY")
                 : ""
             }
             bottomDivider
@@ -70,7 +70,7 @@ export default class EmployeeDetails extends Component {
               title="Termination Date"
               rightTitle={
                 employee.terminationDate
-                  ? moment(employee.terminationDate).format("D MMMM YYYY")
+                  ? moment(employee.terminationDate).format("DD-MMM-YYYY")
                   : ""
               }
               bottomDivider

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { Header } from "react-native-elements";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,7 +11,7 @@ import Launch from "../containers/LaunchContainer";
 import Login from "../containers/LoginContainer";
 import Home from "../containers/HomeContainer";
 import EmployeeDetails from "../components/EmployeeDetails";
-import EmployeeAdd from "../components/EmployeeAdd";
+import EmployeeAdd from "../containers/EmployeeAddContainer";
 import NetworkInfo from "../components/NetworkInfo";
 import { moderateScale } from "../utility/UIScale";
 import { logoutAction } from "../actions/userActions";
@@ -42,11 +42,29 @@ function App() {
                           if (previous) {
                             navigation.goBack();
                           } else {
-                            logoutAction();
-                            navigation.reset({
-                              index: 0,
-                              routes: [{ name: "Login" }]
-                            });
+                            Alert.alert(
+                              "Logout",
+                              "Are you sure you want to logout?",
+                              [
+                                {
+                                  text: "Cancel",
+                                  style: "cancel"
+                                },
+                                {
+                                  text: "OK",
+                                  onPress: () => {
+                                    logoutAction();
+                                    navigation.reset({
+                                      index: 0,
+                                      routes: [{ name: "Login" }]
+                                    });
+                                  }
+                                }
+                              ],
+                              {
+                                cancelable: false
+                              }
+                            );
                           }
                         }}
                       >

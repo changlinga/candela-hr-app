@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Alert } from "react-native";
 import { Input, Button } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import { ALERT_TITLE_INVALID_INFORMATION } from "../constants/general";
 import Secure from "../utility/Secure";
 import { moderateScale } from "../utility/UIScale";
 
@@ -14,7 +16,11 @@ export default class Login extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          extraScrollHeight={90}
+          contentContainerStyle={styles.scrollViewContent}
+        >
           <Input
             label="Staff ID"
             placeholder="Staff ID"
@@ -41,45 +47,83 @@ export default class Login extends Component {
             containerStyle={styles.buttonContainerStyle}
             onPress={this._loginButtonOnPress.bind(this)}
           />
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     );
   }
 
   _loginButtonOnPress() {
-    let encryptedStaffId = Secure.encrypt(
-      this.props.publicKey.publicKey,
-      this.state.staffId
-    );
-    let encryptedPassword = Secure.encrypt(
-      this.props.publicKey.publicKey,
-      this.state.password
-    );
+    if (this.verifyForm()) {
+      let encryptedStaffId = Secure.encrypt(
+        this.props.publicKey.publicKey,
+        this.state.staffId
+      );
+      let encryptedPassword = Secure.encrypt(
+        this.props.publicKey.publicKey,
+        this.state.password
+      );
 
-    this.props.loginAction(encryptedStaffId, encryptedPassword).then(() => {
-      const { error } = this.props.user;
+      this.props.loginAction(encryptedStaffId, encryptedPassword).then(() => {
+        const { error } = this.props.user;
 
-      if (error) {
-        Alert.alert(
-          error.title,
-          error.message,
-          [
+        if (error) {
+          Alert.alert(
+            error.title,
+            error.message,
+            [
+              {
+                text: "OK"
+              }
+            ],
             {
-              text: "OK"
+              cancelable: false
             }
-          ],
-          {
-            cancelable: false
-          }
-        );
-        return;
-      }
+          );
+          return;
+        }
 
-      this.props.navigation.reset({
-        index: 0,
-        routes: [{ name: "Home" }]
+        this.props.navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }]
+        });
       });
-    });
+    }
+  }
+
+  verifyForm() {
+    if (!this.state.staffId) {
+      Alert.alert(
+        ALERT_TITLE_INVALID_INFORMATION,
+        "Please enter your staff ID.",
+        [
+          {
+            text: "OK"
+          }
+        ],
+        {
+          cancelable: false
+        }
+      );
+      return false;
+    }
+
+    if (!this.state.password) {
+      Alert.alert(
+        ALERT_TITLE_INVALID_INFORMATION,
+        "Please enter your password.",
+        [
+          {
+            text: "OK"
+          }
+        ],
+        {
+          cancelable: false
+        }
+      );
+      return false;
+    }
+
+    return true;
   }
 }
 

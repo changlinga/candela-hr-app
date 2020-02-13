@@ -5,3 +5,6 @@ export const STATIC_BASE_URL = BASE_URL + "/static";
 
 // AsyncStorage
 export const ASYNCSTORAGE_KEY_USER = "CANDELAHRAPP_ASYNCSTORAGE_KEY_USER";
+
+// Error
+export const ALERT_TITLE_INVALID_INFORMATION = "Invalid information";

@@ -106,18 +106,5 @@ const styles = StyleSheet.create({
   caption: {
     color: "grey",
     fontSize: moderateScale(15)
-  },
-
-  biography: {
-    marginTop: moderateScale(15),
-    fontSize: moderateScale(15),
-    textAlign: "justify"
-  },
-
-  itemSubtitle: {
-    marginTop: moderateScale(15),
-    marginBottom: moderateScale(5),
-    fontSize: moderateScale(20),
-    fontWeight: "bold"
   }
 });

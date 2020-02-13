@@ -25,7 +25,7 @@ export function employeesListFailure(error) {
 /**
  * List the employees.
  */
-export function employeesListActions() {
+export function employeesListAction() {
   return (dispatch, getState) => {
     dispatch(employeesListRequest());
 

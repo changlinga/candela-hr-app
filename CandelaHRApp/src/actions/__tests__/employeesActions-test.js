@@ -17,7 +17,7 @@ describe("Employees Actions", () => {
       }
     });
 
-    return store.dispatch(employeesActions.employeesListActions()).then(() => {
+    return store.dispatch(employeesActions.employeesListAction()).then(() => {
       expect(store.getActions()[0]).toEqual(
         employeesActions.employeesListRequest()
       );

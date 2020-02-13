@@ -6,7 +6,7 @@ import { Icon } from "react-native-elements";
 
 import Launch from "../containers/LaunchContainer";
 import Login from "../containers/LoginContainer";
-import Home from "../components/Home";
+import Home from "../containers/HomeContainer";
 import EmployeeAdd from "../components/EmployeeAdd";
 import { moderateScale } from "../utility/UIScale";
 import { logoutAction } from "../actions/userActions";

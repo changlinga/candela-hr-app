@@ -7,6 +7,7 @@ import { Icon } from "react-native-elements";
 import Launch from "../containers/LaunchContainer";
 import Login from "../containers/LoginContainer";
 import Home from "../containers/HomeContainer";
+import EmployeeDetails from "../components/EmployeeDetails";
 import EmployeeAdd from "../components/EmployeeAdd";
 import { moderateScale } from "../utility/UIScale";
 import { logoutAction } from "../actions/userActions";
@@ -53,6 +54,11 @@ function App() {
               </TouchableOpacity>
             )
           })}
+        />
+        <Stack.Screen
+          name="EmployeeDetails"
+          component={EmployeeDetails}
+          options={({ route }) => ({ title: route.params.employee.name })}
         />
         <Stack.Screen
           name="EmployeeAdd"

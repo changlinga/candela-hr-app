@@ -42,7 +42,9 @@ export default class Home extends Component {
         bottomDivider
         chevron
         onPress={() => {
-          this.props.navigation.navigate("EmployeeDetails");
+          this.props.navigation.navigate("EmployeeDetails", {
+            employee: item
+          });
         }}
       />
     );

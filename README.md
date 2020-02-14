@@ -2,9 +2,17 @@
 
 ### Setup
 
+1. Run below.
+
 ```
     $ cd CandelaHRApp
     $ npm install
+```
+
+2. Go to CandelaHRApp/src/constants/general.js and change the BASE_URL to your local IP address.
+
+```
+     export const BASE_URL = "http://<your local IP address>:3000";
 ```
 
 ### Run

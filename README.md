@@ -27,6 +27,11 @@
 3. To run on Android device, install Expo app, select "Scan QR Code" and scan the QR code in the Metro Bundler.
 4. To run on iOS device, install Expo app, tap on the plus icon at the top right corner, enter the project URL to open (Expo project url that starts with exp://, available in the Metro Bundler).
 
+### Test Login
+
+Staff ID: 0001
+Password: Password1
+
 ### Unit Test
 
 ```

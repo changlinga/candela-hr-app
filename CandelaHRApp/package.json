@@ -16,7 +16,7 @@
     "@react-navigation/stack": "^5.0.1",
     "expo": "~36.0.0",
     "moment": "^2.24.0",
-    "node-forge": "^0.9.1",
+    "node-forge": "^0.10.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
